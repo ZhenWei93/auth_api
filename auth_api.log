@@ -8,3 +8,9 @@
 {"time": "2025-04-29 17:10:14", "level": "WARNING", "request_id": "039456d6-7587-4405-8e0b-caf480879894", "path": "/api/register", "method": "POST", "message": Invalid id format: B345678901}
 {"time": "2025-04-29 17:10:15", "level": "DEBUG", "request_id": "a716b873-e86b-4911-adb9-3c92b0c8052d", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123456789", "username": "testuser3", "age": "invalid"}}
 {"time": "2025-04-29 17:10:15", "level": "WARNING", "request_id": "a716b873-e86b-4911-adb9-3c92b0c8052d", "path": "/api/register", "method": "POST", "message": Invalid age: invalid}
+{"time": "2025-04-29 17:22:01", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-04-29 17:23:01", "level": "DEBUG", "request_id": "f013068e-9a04-412f-8f23-b1d97e60bb4b", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123456789", "username": "testuser", "age": 30}}
+{"time": "2025-04-29 17:23:01", "level": "WARNING", "request_id": "f013068e-9a04-412f-8f23-b1d97e60bb4b", "path": "/api/register", "method": "POST", "message": ID number already exists: A123456789}
+{"time": "2025-04-29 17:23:01", "level": "DEBUG", "request_id": "f0e06b86-4492-44a2-a5a7-b342d548b4d3", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123456789"}}
+{"time": "2025-04-29 17:23:01", "level": "INFO", "request_id": "f0e06b86-4492-44a2-a5a7-b342d548b4d3", "path": "/api/login", "method": "POST", "message": Login successful: id=A123456789, username=testuser, age=30}
+{"time": "2025-04-29 17:23:08", "level": "DEBUG", "request_id": "76e1ba6b-db7a-4a5d-bf36-6f04bf541995", "path": "/health", "method": "GET", "message": Health check requested}

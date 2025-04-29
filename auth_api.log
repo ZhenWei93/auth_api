@@ -1,0 +1,10 @@
+{"time": "2025-04-29 17:08:40", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-04-29 17:09:13", "level": "DEBUG", "request_id": "a8a903fa-09ac-4b98-91ce-bd4700118233", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123456789", "username": "testuser", "age": 30}}
+{"time": "2025-04-29 17:09:13", "level": "INFO", "request_id": "a8a903fa-09ac-4b98-91ce-bd4700118233", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A123456789, username=testuser, age=30}
+{"time": "2025-04-29 17:09:13", "level": "DEBUG", "request_id": "6b062acc-86b6-47c7-83cb-e8bd70918842", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123456789"}}
+{"time": "2025-04-29 17:09:13", "level": "INFO", "request_id": "6b062acc-86b6-47c7-83cb-e8bd70918842", "path": "/api/login", "method": "POST", "message": Login successful: id=A123456789, username=testuser, age=30}
+{"time": "2025-04-29 17:09:14", "level": "DEBUG", "request_id": "58b32928-815b-45c2-a9e0-cc2af9953007", "path": "/health", "method": "GET", "message": Health check requested}
+{"time": "2025-04-29 17:10:14", "level": "DEBUG", "request_id": "039456d6-7587-4405-8e0b-caf480879894", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "B345678901", "username": "testuser2", "age": 30}}
+{"time": "2025-04-29 17:10:14", "level": "WARNING", "request_id": "039456d6-7587-4405-8e0b-caf480879894", "path": "/api/register", "method": "POST", "message": Invalid id format: B345678901}
+{"time": "2025-04-29 17:10:15", "level": "DEBUG", "request_id": "a716b873-e86b-4911-adb9-3c92b0c8052d", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123456789", "username": "testuser3", "age": "invalid"}}
+{"time": "2025-04-29 17:10:15", "level": "WARNING", "request_id": "a716b873-e86b-4911-adb9-3c92b0c8052d", "path": "/api/register", "method": "POST", "message": Invalid age: invalid}

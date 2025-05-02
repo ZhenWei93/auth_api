@@ -14,3 +14,28 @@
 {"time": "2025-04-29 17:23:01", "level": "DEBUG", "request_id": "f0e06b86-4492-44a2-a5a7-b342d548b4d3", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123456789"}}
 {"time": "2025-04-29 17:23:01", "level": "INFO", "request_id": "f0e06b86-4492-44a2-a5a7-b342d548b4d3", "path": "/api/login", "method": "POST", "message": Login successful: id=A123456789, username=testuser, age=30}
 {"time": "2025-04-29 17:23:08", "level": "DEBUG", "request_id": "76e1ba6b-db7a-4a5d-bf36-6f04bf541995", "path": "/health", "method": "GET", "message": Health check requested}
+{"time": "2025-04-29 17:32:48", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-04-29 17:33:39", "level": "DEBUG", "request_id": "d71badf1-b91d-47de-b0cb-6334af0770f5", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123456789", "username": "testuser", "age": 30}}
+{"time": "2025-04-29 17:33:39", "level": "WARNING", "request_id": "d71badf1-b91d-47de-b0cb-6334af0770f5", "path": "/api/register", "method": "POST", "message": ID number already exists: A123456789}
+{"time": "2025-05-02 23:05:08", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-03 00:59:44", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-03 01:00:20", "level": "DEBUG", "request_id": "e0fe0638-ebef-400c-85b1-90a97679cbeb", "path": "/api/users", "method": "GET", "message": Fetching all users}
+{"time": "2025-05-03 01:00:20", "level": "ERROR", "request_id": "e0fe0638-ebef-400c-85b1-90a97679cbeb", "path": "/api/users", "method": "GET", "message": Failed to fetch users: (sqlite3.OperationalError) no such column: user.identity
+[SQL: SELECT user.id AS user_id, user.age AS user_age, user.username AS user_username, user.password AS user_password, user.identity AS user_identity 
+FROM user]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)}
+{"time": "2025-05-03 01:09:54", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-03 01:10:17", "level": "DEBUG", "request_id": "9c522703-797a-445b-bae4-af024280b587", "path": "/api/users", "method": "GET", "message": Fetching all users}
+{"time": "2025-05-03 01:10:17", "level": "INFO", "request_id": "9c522703-797a-445b-bae4-af024280b587", "path": "/api/users", "method": "GET", "message": Retrieved 1 users}
+{"time": "2025-05-03 01:13:24", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-03 01:13:37", "level": "DEBUG", "request_id": "2ecfc998-02cb-4139-b832-565c459412bf", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A987654321", "username": "newuser", "age": 25, "identity": "teenager"}}
+{"time": "2025-05-03 01:13:37", "level": "WARNING", "request_id": "2ecfc998-02cb-4139-b832-565c459412bf", "path": "/api/register", "method": "POST", "message": Invalid id format: A987654321}
+{"time": "2025-05-03 01:14:47", "level": "DEBUG", "request_id": "194a66cf-44a3-43f8-8fe8-d32e2801fa38", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A188888888", "username": "newuser888", "age": 15, "identity": "teenager"}}
+{"time": "2025-05-03 01:14:47", "level": "INFO", "request_id": "194a66cf-44a3-43f8-8fe8-d32e2801fa38", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A188888888, username=newuser888, age=15, identity=teenager}
+{"time": "2025-05-03 01:15:06", "level": "DEBUG", "request_id": "0eeb161d-01b2-4253-88b5-7c55547b144e", "path": "/api/users", "method": "GET", "message": Fetching all users}
+{"time": "2025-05-03 01:15:06", "level": "INFO", "request_id": "0eeb161d-01b2-4253-88b5-7c55547b144e", "path": "/api/users", "method": "GET", "message": Retrieved 2 users}
+{"time": "2025-05-03 01:18:25", "level": "DEBUG", "request_id": "07cd1bf8-a706-44eb-a2a0-f22af536ab34", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A188888888"}}
+{"time": "2025-05-03 01:18:25", "level": "INFO", "request_id": "07cd1bf8-a706-44eb-a2a0-f22af536ab34", "path": "/api/login", "method": "POST", "message": Login successful: id=A188888888, username=newuser888, age=15, identity=teenager}
+{"time": "2025-05-03 02:00:05", "level": "DEBUG", "request_id": "2aac8b9f-1b6e-4650-96f6-72cbd9ec739c", "path": "/api/users", "method": "GET", "message": Fetching all users}
+{"time": "2025-05-03 02:00:05", "level": "INFO", "request_id": "2aac8b9f-1b6e-4650-96f6-72cbd9ec739c", "path": "/api/users", "method": "GET", "message": Retrieved 2 users}
+{"time": "2025-05-03 02:17:12", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}

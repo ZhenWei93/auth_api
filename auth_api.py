@@ -48,12 +48,21 @@ db = SQLAlchemy(app)
 # 設定日誌等級為 DEBUG，可輸出詳細的除錯資訊
 logging.basicConfig(level=logging.DEBUG)
 
+# 定義身份選項
+# VALID_IDENTITIES = {'幼兒', '孩童', '青少年', '年長者', '孕婦', '一般成人'}
+VALID_IDENTITIES = {'baby', 'child', 'teenager', 'elderly', 'pregnant', 'general'}
+
 # 定義 User 模型（資料表），代表使用者資料
 class User(db.Model):
     id = db.Column(db.String(10), primary_key=True, nullable=False)  # 身分證
     age = db.Column(db.Integer, nullable=False)  # 年齡
     username = db.Column(db.String(80), unique=True, nullable=False)  # 使用者名稱
     password = db.Column(db.String(120), nullable=False)  # 明文密碼
+    identity = db.Column(db.String(10), nullable=False)  # 新增 identity 欄位
+
+# 建立資料表
+with app.app_context():
+    db.create_all()
 
 # 身分證號碼驗證
 def validate_id(id):
@@ -70,6 +79,10 @@ def validate_age(age):
         return 0 <= age <= 150  # 合理年齡範圍
     except (ValueError, TypeError):
         return False
+
+# 身份驗證
+def validate_identity(identity):
+    return identity in VALID_IDENTITIES
 
 # 日誌上下文過濾器
 class RequestContextFilter(logging.Filter):
@@ -100,14 +113,15 @@ def register():
         logger.debug(f"Received register request: {json.dumps({k: v for k, v in data.items() if k != 'password'})}")
 
         # 檢查必要欄位
-        if not data or 'id' not in data or 'username' not in data or 'password' not in data or 'age' not in data:
-            logger.warning("Missing id, username, password, or age")
-            return jsonify({'error': 'Missing id, username, password, or age'}), 400
+        if not data or 'id' not in data or 'username' not in data or 'password' not in data or 'age' not in data or 'identity' not in data:
+            logger.warning("Missing id, username, password, or age, or identity")
+            return jsonify({'error': 'Missing id, username, password, age, or identity '}), 400
 
         id = data['id']
         username = data['username']
         password = data['password']
         age = data['age']
+        identity = data['identity']
 
         # 驗證身分證號碼
         if not validate_id(id):
@@ -119,6 +133,11 @@ def register():
             logger.warning(f"Invalid age: {age}")
             return jsonify({'error': 'Invalid age: must be a number between 0 and 150'}), 400
 
+        # 驗證身份
+        if not validate_identity(identity):
+            logger.warning(f"Invalid identity: {identity}")
+            return jsonify({'error': f"Invalid identity: must be one of {', '.join(VALID_IDENTITIES)}"}), 400
+
         # 檢查身分證號碼或使用者名稱是否已存在
         if User.query.filter_by(id=id).first():
             logger.warning(f"ID number already exists: {id}")
@@ -127,13 +146,13 @@ def register():
             logger.warning(f"Username already exists: {username}")
             return jsonify({'error': 'Username already exists'}), 400
 
-        # 儲存密碼(明文)
-        new_user = User(id=id, age=int(age), username=username, password=password)
+        # 儲存使用者資料（包括身份）
+        new_user = User(id=id, age=int(age), username=username, password=password, identity=identity)
         db.session.add(new_user)
         db.session.commit()
 
-        logger.info(f"User registered successfully: id={id}, username={username}, age={age}")
-        return jsonify({'message': 'User registered successfully', 'id': id}), 201
+        logger.info(f"User registered successfully: id={id}, username={username}, age={age}, identity={identity}")
+        return jsonify({'message': 'User registered successfully', 'id': id, 'identity': identity}), 201
         
     except Exception as e:
         logger.error(f"Register failed: {str(e)}")
@@ -162,8 +181,15 @@ def login():
 
         user = User.query.filter_by(id=id).first()
         if user and user.password == password:
-            logger.info(f"Login successful: id={id}, username={user.username}, age={user.age}")
-            return jsonify({'message': 'Login successful', 'token': 'dummy-token', 'id': id, 'username': user.username, 'age': user.age}), 200
+            logger.info(f"Login successful: id={id}, username={user.username}, age={user.age}, identity={user.identity}")
+            return jsonify({
+                'message': 'Login successful',
+                'token': 'dummy-token',
+                'id': id,
+                'username': user.username,
+                'age': user.age,
+                'identity': user.identity
+            }), 200
         
         logger.warning(f"Login failed: invalid credentials for id={id}")
         return jsonify({'error': 'Invalid credentials'}), 401
@@ -176,6 +202,25 @@ def login():
 def health():
     logger.debug("Health check requested")
     return jsonify({'status': 'healthy'}), 200
+
+# 新增查看所有使用者資料的 API
+@app.route('/api/users', methods=['GET'])
+def get_users():
+    try:
+        logger.debug("Fetching all users")
+        users = User.query.all()
+        user_list = [{
+            'id': user.id,
+            'age': user.age,
+            'username': user.username,
+            'password': user.password,
+            'identity': user.identity
+        } for user in users]
+        logger.info(f"Retrieved {len(user_list)} users")
+        return jsonify(user_list), 200
+    except Exception as e:
+        logger.error(f"Failed to fetch users: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
 
 # 主程式進入點
 if __name__ == '__main__':

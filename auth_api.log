@@ -39,3 +39,152 @@ FROM user]
 {"time": "2025-05-03 02:00:05", "level": "DEBUG", "request_id": "2aac8b9f-1b6e-4650-96f6-72cbd9ec739c", "path": "/api/users", "method": "GET", "message": Fetching all users}
 {"time": "2025-05-03 02:00:05", "level": "INFO", "request_id": "2aac8b9f-1b6e-4650-96f6-72cbd9ec739c", "path": "/api/users", "method": "GET", "message": Retrieved 2 users}
 {"time": "2025-05-03 02:17:12", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 17:58:33", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 18:01:02", "level": "DEBUG", "request_id": "a0fc6566-a636-4a87-85c7-8ced7196aee9", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "age": 30, "identity": "general"}}
+{"time": "2025-05-05 18:01:02", "level": "INFO", "request_id": "a0fc6566-a636-4a87-85c7-8ced7196aee9", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A123123123, username=testuser123, age=30, identity=general}
+{"time": "2025-05-05 18:01:27", "level": "DEBUG", "request_id": "05eed534-f2a2-4c87-96fa-8852ce5a4b4f", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123123123"}}
+{"time": "2025-05-05 18:01:27", "level": "INFO", "request_id": "05eed534-f2a2-4c87-96fa-8852ce5a4b4f", "path": "/api/login", "method": "POST", "message": Login successful: id=A123123123, username=testuser123, age=30, identity=general}
+{"time": "2025-05-05 18:02:23", "level": "ERROR", "request_id": "f43e2161-5ecf-4269-9865-e78698778668", "path": "/api/search-history", "method": "POST", "message": Add search history failed: (sqlite3.IntegrityError) NOT NULL constraint failed: search_history.id
+[SQL: INSERT INTO search_history (user_id, query_text, query_time) VALUES (?, ?, ?)]
+[parameters: ('A123123123', 'ï¿½ï¿½ï¿½Jï¿½G', '2025-05-05 10:02:23.795507')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)}
+{"time": "2025-05-05 18:09:36", "level": "DEBUG", "request_id": "21eca843-166d-45de-9163-b3d889cb7a5c", "path": "/api/search-history", "method": "GET", "message": Fetching search history for user_id=A123123123}
+{"time": "2025-05-05 18:09:36", "level": "INFO", "request_id": "21eca843-166d-45de-9163-b3d889cb7a5c", "path": "/api/search-history", "method": "GET", "message": Retrieved 0 search history records for user_id=A123123123}
+{"time": "2025-05-05 20:44:15", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 20:44:51", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 20:46:06", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 20:50:20", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 20:50:46", "level": "ERROR", "request_id": "984756e1-ac3b-4d47-90cb-73ef662a9187", "path": "/api/search-history", "method": "POST", "message": Add search history failed: (sqlite3.IntegrityError) NOT NULL constraint failed: search_history.id
+[SQL: INSERT INTO search_history (user_id, query_text, query_time) VALUES (?, ?, ?)]
+[parameters: ('A123123123', 'ï¿½ï¿½ï¿½Jï¿½G', '2025-05-05 12:50:00.000000')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)}
+{"time": "2025-05-05 20:51:58", "level": "ERROR", "request_id": "fcae1180-d78d-450b-9eac-f8919770ac18", "path": "/api/search-history", "method": "POST", "message": Add search history failed: (sqlite3.IntegrityError) NOT NULL constraint failed: search_history.id
+[SQL: INSERT INTO search_history (user_id, query_text, query_time) VALUES (?, ?, ?)]
+[parameters: ('A123123123', 'P', '2025-05-05 12:51:00.000000')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)}
+{"time": "2025-05-05 21:08:12", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 21:08:53", "level": "DEBUG", "request_id": "1be76d5a-0c2d-481c-b5fe-6e63658b07c3", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "age": 30, "identity": "general"}}
+{"time": "2025-05-05 21:08:53", "level": "WARNING", "request_id": "1be76d5a-0c2d-481c-b5fe-6e63658b07c3", "path": "/api/register", "method": "POST", "message": ID number already exists: A123123123}
+{"time": "2025-05-05 21:10:15", "level": "DEBUG", "request_id": "597ed38a-020d-4ca6-8d9b-caf4b35e1e6d", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A121212121", "username": "testuser121", "age": 45, "identity": "general"}}
+{"time": "2025-05-05 21:10:15", "level": "INFO", "request_id": "597ed38a-020d-4ca6-8d9b-caf4b35e1e6d", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A121212121, username=testuser121, age=45, identity=general}
+{"time": "2025-05-05 21:10:34", "level": "DEBUG", "request_id": "b5691959-f99b-4375-8f3b-3288a91d82b6", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A121212121"}}
+{"time": "2025-05-05 21:10:34", "level": "INFO", "request_id": "b5691959-f99b-4375-8f3b-3288a91d82b6", "path": "/api/login", "method": "POST", "message": Login successful: id=A121212121, username=testuser121, age=45, identity=general}
+{"time": "2025-05-05 21:11:12", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 21:11:29", "level": "ERROR", "request_id": "cda1528c-d933-4c76-8f25-a4da2b2243e1", "path": "/api/search-history", "method": "POST", "message": Add search history failed: (sqlite3.IntegrityError) NOT NULL constraint failed: search_history.id
+[SQL: INSERT INTO search_history (user_id, query_text, query_time) VALUES (?, ?, ?)]
+[parameters: ('A123123123', 'ï¿½ï¿½ï¿½Jï¿½G', '2025-05-05 13:11:00.000000')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)}
+{"time": "2025-05-05 21:11:46", "level": "ERROR", "request_id": "c0af514a-85f1-4400-929d-a3b71dd90343", "path": "/api/search-history", "method": "POST", "message": Add search history failed: (sqlite3.IntegrityError) NOT NULL constraint failed: search_history.id
+[SQL: INSERT INTO search_history (user_id, query_text, query_time) VALUES (?, ?, ?)]
+[parameters: ('A123123123', 'P', '2025-05-05 13:11:00.000000')]
+(Background on this error at: https://sqlalche.me/e/20/gkpj)}
+{"time": "2025-05-05 21:20:46", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 21:21:20", "level": "DEBUG", "request_id": "719d0f2b-bb09-4f72-bf50-d1a959e7f7d1", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123123123"}}
+{"time": "2025-05-05 21:21:20", "level": "WARNING", "request_id": "719d0f2b-bb09-4f72-bf50-d1a959e7f7d1", "path": "/api/login", "method": "POST", "message": Login failed: invalid credentials for id=A123123123}
+{"time": "2025-05-05 21:21:35", "level": "DEBUG", "request_id": "dc99e013-7b70-4090-a1ea-ea851aaa22aa", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "age": 30, "identity": "general"}}
+{"time": "2025-05-05 21:21:35", "level": "INFO", "request_id": "dc99e013-7b70-4090-a1ea-ea851aaa22aa", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A123123123, username=testuser123, age=30, identity=general}
+{"time": "2025-05-05 21:21:40", "level": "DEBUG", "request_id": "da034432-d16c-400e-8627-561ba86a6fe8", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123123123"}}
+{"time": "2025-05-05 21:21:40", "level": "INFO", "request_id": "da034432-d16c-400e-8627-561ba86a6fe8", "path": "/api/login", "method": "POST", "message": Login successful: id=A123123123, username=testuser123, age=30, identity=general}
+{"time": "2025-05-05 21:21:55", "level": "INFO", "request_id": "9eb2abbd-b2f5-4e10-87a3-42d7690a7368", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A123123123, query_text=P}
+{"time": "2025-05-05 21:22:31", "level": "DEBUG", "request_id": "cb382d48-1aa8-4342-84dd-e7856f64504a", "path": "/api/search-history", "method": "GET", "message": Fetching search history for user_id=A123123123}
+{"time": "2025-05-05 21:22:31", "level": "INFO", "request_id": "cb382d48-1aa8-4342-84dd-e7856f64504a", "path": "/api/search-history", "method": "GET", "message": Retrieved 1 search history records for user_id=A123123123}
+{"time": "2025-05-05 23:29:58", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 23:31:37", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 23:31:55", "level": "DEBUG", "request_id": "c9af35e1-20a2-463c-a7a7-22a53531a7f4", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "age": 30, "identity": "general"}}
+{"time": "2025-05-05 23:31:55", "level": "ERROR", "request_id": "c9af35e1-20a2-463c-a7a7-22a53531a7f4", "path": "/api/register", "method": "POST", "message": Register failed: (sqlite3.OperationalError) no such column: user.age
+[SQL: SELECT user.id AS user_id, user.age AS user_age, user.username AS user_username, user.password AS user_password, user.identity AS user_identity 
+FROM user 
+WHERE user.id = ?
+ LIMIT ? OFFSET ?]
+[parameters: ('A123123123', 1, 0)]
+(Background on this error at: https://sqlalche.me/e/20/e3q8)}
+{"time": "2025-05-05 23:32:15", "level": "DEBUG", "request_id": "3f3c5f28-2854-43a7-b36f-712b195ae651", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "identity": "general"}}
+{"time": "2025-05-05 23:32:15", "level": "WARNING", "request_id": "3f3c5f28-2854-43a7-b36f-712b195ae651", "path": "/api/register", "method": "POST", "message": Missing id, username, password, or age, or identity}
+{"time": "2025-05-05 23:40:17", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 23:40:39", "level": "DEBUG", "request_id": "3ec2f693-94a9-4d23-b082-9ed106dff378", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "identity": "general"}}
+{"time": "2025-05-05 23:40:39", "level": "WARNING", "request_id": "3ec2f693-94a9-4d23-b082-9ed106dff378", "path": "/api/register", "method": "POST", "message": Missing id, username, password, or age, or identity}
+{"time": "2025-05-05 23:43:38", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 23:56:12", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 23:56:38", "level": "DEBUG", "request_id": "82f644c8-72a7-48b5-a2fe-ffc26a681ca1", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "identity": "general"}}
+{"time": "2025-05-05 23:56:38", "level": "WARNING", "request_id": "82f644c8-72a7-48b5-a2fe-ffc26a681ca1", "path": "/api/register", "method": "POST", "message": Missing id, username, password, or age, or identity}
+{"time": "2025-05-05 23:58:42", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-05 23:58:54", "level": "DEBUG", "request_id": "1cd05ac8-49de-40d6-a664-f103f1b4d906", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "identity": "general"}}
+{"time": "2025-05-05 23:58:54", "level": "WARNING", "request_id": "1cd05ac8-49de-40d6-a664-f103f1b4d906", "path": "/api/register", "method": "POST", "message": Missing id, username, password, or age, or identity}
+{"time": "2025-05-06 00:01:02", "level": "DEBUG", "request_id": "cdf7c026-c0f4-4604-92e4-bdfb60413261", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "identity": "general"}}
+{"time": "2025-05-06 00:01:02", "level": "WARNING", "request_id": "cdf7c026-c0f4-4604-92e4-bdfb60413261", "path": "/api/register", "method": "POST", "message": Missing id, username, password, or age, or identity}
+{"time": "2025-05-06 00:02:22", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 00:02:32", "level": "DEBUG", "request_id": "c3451172-7721-449b-8431-6cd5bb1062e5", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "identity": "general"}}
+{"time": "2025-05-06 00:02:32", "level": "WARNING", "request_id": "c3451172-7721-449b-8431-6cd5bb1062e5", "path": "/api/register", "method": "POST", "message": Missing id, username, password, or age, or identity}
+{"time": "2025-05-06 00:04:45", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 00:05:38", "level": "DEBUG", "request_id": "c08afa7d-e7a5-48dd-8003-bd825a60bb35", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "identity": "general"}}
+{"time": "2025-05-06 00:05:38", "level": "WARNING", "request_id": "c08afa7d-e7a5-48dd-8003-bd825a60bb35", "path": "/api/register", "method": "POST", "message": Missing id, username, password, or age, or identity}
+{"time": "2025-05-06 00:11:01", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 00:11:58", "level": "ERROR", "request_id": "1fe35460-10f5-4394-a451-1689ea0371fb", "path": "/api/register", "method": "POST", "message": Register failed: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.}
+{"time": "2025-05-06 00:15:24", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 00:16:12", "level": "ERROR", "request_id": "5a93a689-a055-4945-b351-c95651bd618d", "path": "/api/register", "method": "POST", "message": Register failed: 400 Bad Request: The browser (or proxy) sent a request that this server could not understand.}
+{"time": "2025-05-06 00:17:37", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 00:18:21", "level": "DEBUG", "request_id": "3ee413b3-784a-4e79-b042-2211dba79922", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "age": 30, "identity": "general"}}
+{"time": "2025-05-06 00:18:21", "level": "INFO", "request_id": "3ee413b3-784a-4e79-b042-2211dba79922", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A123123123, username=testuser123, age=30, identity=general}
+{"time": "2025-05-06 00:18:27", "level": "DEBUG", "request_id": "1236ccc3-10ff-432f-acf1-7da6dc5aaa72", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123123123"}}
+{"time": "2025-05-06 00:18:27", "level": "INFO", "request_id": "1236ccc3-10ff-432f-acf1-7da6dc5aaa72", "path": "/api/login", "method": "POST", "message": Login successful: id=A123123123, username=testuser123, age=30, identity=general}
+{"time": "2025-05-06 00:18:36", "level": "INFO", "request_id": "81c83930-a2b2-448a-9f22-b2a9ae3cf60c", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A123123123, query_text=´¶§J­G}
+{"time": "2025-05-06 00:18:45", "level": "DEBUG", "request_id": "ebcad934-b910-4251-915d-b1966093a17f", "path": "/api/search-history", "method": "GET", "message": Fetching search history for user_id=A123123123}
+{"time": "2025-05-06 00:18:45", "level": "INFO", "request_id": "ebcad934-b910-4251-915d-b1966093a17f", "path": "/api/search-history", "method": "GET", "message": Retrieved 1 search history records for user_id=A123123123}
+{"time": "2025-05-06 00:24:43", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 00:26:05", "level": "DEBUG", "request_id": "9b00bfa3-21a5-4b4b-8f71-d39efc64a7c6", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A123123123", "username": "testuser123", "identity": "general"}}
+{"time": "2025-05-06 00:26:05", "level": "INFO", "request_id": "9b00bfa3-21a5-4b4b-8f71-d39efc64a7c6", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A123123123, username=testuser123, identity=general}
+{"time": "2025-05-06 00:26:23", "level": "DEBUG", "request_id": "5b9f6b17-c6f1-4316-852b-c7e5a3b0b786", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123123123"}}
+{"time": "2025-05-06 00:26:23", "level": "INFO", "request_id": "5b9f6b17-c6f1-4316-852b-c7e5a3b0b786", "path": "/api/login", "method": "POST", "message": Login successful: id=A123123123, username=testuser123, identity=general}
+{"time": "2025-05-06 00:27:55", "level": "DEBUG", "request_id": "fecea7e5-dcaa-42da-ba32-7b4ebeec6521", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123123123"}}
+{"time": "2025-05-06 00:27:55", "level": "INFO", "request_id": "fecea7e5-dcaa-42da-ba32-7b4ebeec6521", "path": "/api/login", "method": "POST", "message": Login successful: id=A123123123, username=testuser123, identity=general}
+{"time": "2025-05-06 00:29:00", "level": "DEBUG", "request_id": "1033d199-cbdb-4c06-9461-955261386a20", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A122222222", "username": "testuser122", "identity": "baby"}}
+{"time": "2025-05-06 00:29:00", "level": "INFO", "request_id": "1033d199-cbdb-4c06-9461-955261386a20", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A122222222, username=testuser122, identity=baby}
+{"time": "2025-05-06 00:31:34", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 00:46:10", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 00:51:30", "level": "WARNING", "request_id": "83208561-5111-4e6a-88dd-cdd359324611", "path": "/api/search-history", "method": "POST", "message": Missing user_id in request}
+{"time": "2025-05-06 00:51:30", "level": "ERROR", "request_id": "83208561-5111-4e6a-88dd-cdd359324611", "path": "/api/search-history", "method": "POST", "message": Add search history failed: too many values to unpack (expected 2)}
+{"time": "2025-05-06 00:52:21", "level": "WARNING", "request_id": "454216a4-f7c5-423a-8274-ae861fe86a95", "path": "/api/search-history", "method": "POST", "message": User not found for user_id: A123456789}
+{"time": "2025-05-06 00:52:21", "level": "ERROR", "request_id": "454216a4-f7c5-423a-8274-ae861fe86a95", "path": "/api/search-history", "method": "POST", "message": Add search history failed: too many values to unpack (expected 2)}
+{"time": "2025-05-06 01:01:11", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 01:01:21", "level": "DEBUG", "request_id": "9ba33fda-74a9-4a31-9d66-63c721a31676", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A122222222", "username": "testuser122", "identity": "baby"}}
+{"time": "2025-05-06 01:01:21", "level": "INFO", "request_id": "9ba33fda-74a9-4a31-9d66-63c721a31676", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A122222222, username=testuser122, identity=baby}
+{"time": "2025-05-06 01:04:39", "level": "DEBUG", "request_id": "9270116e-ce6a-48b8-83c5-117dae42cac2", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A122222222"}}
+{"time": "2025-05-06 01:04:39", "level": "INFO", "request_id": "9270116e-ce6a-48b8-83c5-117dae42cac2", "path": "/api/login", "method": "POST", "message": Login successful: id=A122222222, username=testuser122, identity=baby}
+{"time": "2025-05-06 01:05:33", "level": "INFO", "request_id": "cb0821ea-462a-43ff-9e01-90569fa01ca4", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A122222222, query_text=´¶§J­G}
+{"time": "2025-05-06 01:05:49", "level": "INFO", "request_id": "e66cb8b4-796d-4d18-ab06-487d650bb4e5", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A122222222, query_text=­¹ÆQ}
+{"time": "2025-05-06 01:06:07", "level": "INFO", "request_id": "46323d21-d9e2-4785-b34d-d4c9ead49c79", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A122222222, query_text=ÁÞ}
+{"time": "2025-05-06 01:06:28", "level": "WARNING", "request_id": "c73f6233-6a97-488b-8e53-d2794de99b38", "path": "/api/search-history", "method": "GET", "message": User not found for user_id: A123456789}
+{"time": "2025-05-06 01:06:28", "level": "ERROR", "request_id": "c73f6233-6a97-488b-8e53-d2794de99b38", "path": "/api/search-history", "method": "GET", "message": Get search history failed: too many values to unpack (expected 2)}
+{"time": "2025-05-06 01:06:37", "level": "DEBUG", "request_id": "9addfa82-3f7e-4d32-87af-7bc6bb4fc578", "path": "/api/search-history", "method": "GET", "message": Fetching search history for user_id=A122222222}
+{"time": "2025-05-06 01:06:37", "level": "INFO", "request_id": "9addfa82-3f7e-4d32-87af-7bc6bb4fc578", "path": "/api/search-history", "method": "GET", "message": Retrieved 3 search history records for user_id=A122222222}
+{"time": "2025-05-06 01:27:43", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 01:28:10", "level": "WARNING", "request_id": "5f5b1c50-7557-409c-ace5-70bc54c77641", "path": "/api/search-history", "method": "POST", "message": User not found for user_id: A122222222}
+{"time": "2025-05-06 01:28:10", "level": "ERROR", "request_id": "5f5b1c50-7557-409c-ace5-70bc54c77641", "path": "/api/search-history", "method": "POST", "message": Add search history failed: too many values to unpack (expected 2)}
+{"time": "2025-05-06 01:33:46", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 01:34:03", "level": "DEBUG", "request_id": "1a068b35-890b-43db-bf53-0d35389e7e01", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A122222222", "username": "testuser122", "identity": "baby"}}
+{"time": "2025-05-06 01:34:03", "level": "INFO", "request_id": "1a068b35-890b-43db-bf53-0d35389e7e01", "path": "/api/register", "method": "POST", "message": User registered successfully: id=A122222222, username=testuser122, identity=baby}
+{"time": "2025-05-06 01:34:09", "level": "DEBUG", "request_id": "79441e37-fe3e-435a-84de-e7053b04b467", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A123123123"}}
+{"time": "2025-05-06 01:34:09", "level": "WARNING", "request_id": "79441e37-fe3e-435a-84de-e7053b04b467", "path": "/api/login", "method": "POST", "message": Login failed: invalid credentials for id=A123123123}
+{"time": "2025-05-06 01:34:38", "level": "DEBUG", "request_id": "3009b5ee-1272-49bf-9453-460f54a5044a", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A122222222"}}
+{"time": "2025-05-06 01:34:38", "level": "INFO", "request_id": "3009b5ee-1272-49bf-9453-460f54a5044a", "path": "/api/login", "method": "POST", "message": Login successful: id=A122222222, username=testuser122, identity=baby}
+{"time": "2025-05-06 01:34:59", "level": "INFO", "request_id": "52edaf52-44ed-4c6e-8039-aabf18a18409", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A122222222, query_text=­¹ÆQ}
+{"time": "2025-05-06 01:35:06", "level": "INFO", "request_id": "c5b3df06-d3b5-4a1c-b644-bc3e455644c0", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A122222222, query_text=´¶§J­G}
+{"time": "2025-05-06 01:35:17", "level": "INFO", "request_id": "1379a26b-fe56-4e86-ba67-ef8543f59174", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A122222222, query_text=ÁÞ}
+{"time": "2025-05-06 01:35:36", "level": "INFO", "request_id": "4e823d95-dde7-4dae-b08e-b44c080b2da6", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A122222222, query_text=¤ô}
+{"time": "2025-05-06 01:35:57", "level": "INFO", "request_id": "780f60a9-32ed-422e-8c32-900fd3139b02", "path": "/api/search-history", "method": "POST", "message": Search history added for user_id=A122222222, query_text=¿õ}
+{"time": "2025-05-06 01:36:10", "level": "DEBUG", "request_id": "fa1f5bfe-29e4-405c-ada1-7c6fa6d82aeb", "path": "/api/search-history", "method": "GET", "message": Fetching search history for user_id=A122222222}
+{"time": "2025-05-06 01:36:10", "level": "INFO", "request_id": "fa1f5bfe-29e4-405c-ada1-7c6fa6d82aeb", "path": "/api/search-history", "method": "GET", "message": Retrieved 5 search history records for user_id=A122222222}
+{"time": "2025-05-06 01:37:10", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 01:37:19", "level": "DEBUG", "request_id": "0434de84-6b18-4fcc-b8b6-27b892615697", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A122222222"}}
+{"time": "2025-05-06 01:37:19", "level": "INFO", "request_id": "0434de84-6b18-4fcc-b8b6-27b892615697", "path": "/api/login", "method": "POST", "message": Login successful: id=A122222222, username=testuser122, identity=baby}
+{"time": "2025-05-06 01:37:26", "level": "DEBUG", "request_id": "6809a407-43d3-40af-9766-9b06788b70b1", "path": "/api/register", "method": "POST", "message": Received register request: {"id": "A122222222", "username": "testuser122", "identity": "baby"}}
+{"time": "2025-05-06 01:37:26", "level": "WARNING", "request_id": "6809a407-43d3-40af-9766-9b06788b70b1", "path": "/api/register", "method": "POST", "message": ID number already exists: A122222222}
+{"time": "2025-05-06 01:37:36", "level": "WARNING", "request_id": "03d638e2-58fb-4938-9f27-dea923fb55d9", "path": "/api/search-history", "method": "GET", "message": User not found for user_id: A123123123}
+{"time": "2025-05-06 01:37:36", "level": "ERROR", "request_id": "03d638e2-58fb-4938-9f27-dea923fb55d9", "path": "/api/search-history", "method": "GET", "message": Get search history failed: too many values to unpack (expected 2)}
+{"time": "2025-05-06 01:37:54", "level": "DEBUG", "request_id": "3992eaec-9843-44d1-a169-703e512048d8", "path": "/api/search-history", "method": "GET", "message": Fetching search history for user_id=A122222222}
+{"time": "2025-05-06 01:37:54", "level": "INFO", "request_id": "3992eaec-9843-44d1-a169-703e512048d8", "path": "/api/search-history", "method": "GET", "message": Retrieved 5 search history records for user_id=A122222222}
+{"time": "2025-05-06 01:41:03", "level": "INFO", "request_id": "none", "path": "none", "method": "none", "message": Database initialized}
+{"time": "2025-05-06 01:41:30", "level": "DEBUG", "request_id": "bf9ce3d6-6e5e-4d4f-894b-c4102d49756a", "path": "/api/login", "method": "POST", "message": Received login request: {"id": "A122222222"}}
+{"time": "2025-05-06 01:41:30", "level": "INFO", "request_id": "bf9ce3d6-6e5e-4d4f-894b-c4102d49756a", "path": "/api/login", "method": "POST", "message": Login successful: id=A122222222, username=testuser122, identity=baby}
+{"time": "2025-05-06 01:42:09", "level": "DEBUG", "request_id": "8f0648f1-ed5c-4806-ad16-7395c845098e", "path": "/api/search-history", "method": "GET", "message": Fetching search history for user_id=A122222222}
+{"time": "2025-05-06 01:42:09", "level": "INFO", "request_id": "8f0648f1-ed5c-4806-ad16-7395c845098e", "path": "/api/search-history", "method": "GET", "message": Retrieved 5 search history records for user_id=A122222222}

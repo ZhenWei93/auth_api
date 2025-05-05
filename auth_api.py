@@ -7,6 +7,7 @@ import logging
 from logging import Formatter
 from logging.handlers import RotatingFileHandler
 import json
+from datetime import datetime
 
 # 設置日誌格式
 log_formatter = Formatter(
@@ -49,40 +50,44 @@ db = SQLAlchemy(app)
 logging.basicConfig(level=logging.DEBUG)
 
 # 定義身份選項
-# VALID_IDENTITIES = {'幼兒', '孩童', '青少年', '年長者', '孕婦', '一般成人'}
 VALID_IDENTITIES = {'baby', 'child', 'teenager', 'elderly', 'pregnant', 'general'}
 
 # 定義 User 模型（資料表），代表使用者資料
 class User(db.Model):
     id = db.Column(db.String(10), primary_key=True, nullable=False)  # 身分證
-    age = db.Column(db.Integer, nullable=False)  # 年齡
     username = db.Column(db.String(80), unique=True, nullable=False)  # 使用者名稱
     password = db.Column(db.String(120), nullable=False)  # 明文密碼
-    identity = db.Column(db.String(10), nullable=False)  # 新增 identity 欄位
+    identity = db.Column(db.String(10), nullable=False)  # identity 欄位
 
-# 建立資料表
-with app.app_context():
-    db.create_all()
+# 定義 SearchHistory 模型（資料表），代表查詢歷史
+class SearchHistory(db.Model):
+    id = db.Column(db.Integer, primary_key=True)  # 自增主鍵，移除 autoincrement=True
+    user_id = db.Column(db.String(10), db.ForeignKey('user.id'), nullable=False)  # 外鍵，關聯到 user 表
+    query_text = db.Column(db.String(255), nullable=False)  # 查詢內容
+    query_time = db.Column(db.DateTime, nullable=False)  # 查詢時間
+    user = db.relationship('User', backref=db.backref('search_history', lazy=True))
+
+## 建立資料表（先刪除舊表）
+# with app.app_context():
+    # db.drop_all()  # 刪除舊表
+    # db.create_all()  # 重新創建表
 
 # 身分證號碼驗證
 def validate_id(id):
     if not id:
         return False
-    # 檢查格式：第一碼大寫字母，第二碼1或2，其餘8碼數字
     pattern = r'^[A-Z][12][0-9]{8}$'
     return bool(re.match(pattern, id))
-
-# 年齡驗證
-def validate_age(age):
-    try:
-        age = int(age)
-        return 0 <= age <= 150  # 合理年齡範圍
-    except (ValueError, TypeError):
-        return False
 
 # 身份驗證
 def validate_identity(identity):
     return identity in VALID_IDENTITIES
+
+# 查詢內容驗證
+def validate_query_text(query_text):
+    if not query_text or len(query_text) > 255:
+        return False
+    return True
 
 # 日誌上下文過濾器
 class RequestContextFilter(logging.Filter):
@@ -105,6 +110,32 @@ logger.addFilter(RequestContextFilter())
 def add_request_id():
     request.request_id = str(uuid.uuid4())
 
+# 驗證 token（簡單檢查）
+def authenticate_request():
+    token = request.headers.get('Authorization', '').replace('Bearer ', '')
+    if not token:
+        logger.warning("Missing token")
+        return None, jsonify({'error': 'Missing token'}), 401
+    
+    # 目前使用 dummy-token，未來可改進為 JWT 或其他認證方式
+    if token != 'dummy-token':
+        logger.warning(f"Invalid token: {token}")
+        return None, jsonify({'error': 'Invalid token'}), 401
+    
+    # 從請求體中獲取 user_id（假設前端會提供）
+    data = request.get_json(silent=True)
+    user_id = data.get('user_id') if data else None
+    if not user_id:
+        logger.warning("Missing user_id in request")
+        return None, jsonify({'error': 'Missing user_id'}), 400
+    
+    user = User.query.filter_by(id=user_id).first()
+    if not user:
+        logger.warning(f"User not found for user_id: {user_id}")
+        return None, jsonify({'error': 'User not found'}), 404
+    
+    return user, None
+
 # 使用者註冊 API：接收 POST 請求
 @app.route('/api/register', methods=['POST'])
 def register():
@@ -112,33 +143,23 @@ def register():
         data = request.get_json()
         logger.debug(f"Received register request: {json.dumps({k: v for k, v in data.items() if k != 'password'})}")
 
-        # 檢查必要欄位
-        if not data or 'id' not in data or 'username' not in data or 'password' not in data or 'age' not in data or 'identity' not in data:
-            logger.warning("Missing id, username, password, or age, or identity")
-            return jsonify({'error': 'Missing id, username, password, age, or identity '}), 400
+        if not data or 'id' not in data or 'username' not in data or 'password' not in data or 'identity' not in data:
+            logger.warning("Missing id, username, password, or identity")
+            return jsonify({'error': 'Missing id, username, password, or identity'}), 400
 
         id = data['id']
         username = data['username']
         password = data['password']
-        age = data['age']
         identity = data['identity']
 
-        # 驗證身分證號碼
         if not validate_id(id):
             logger.warning(f"Invalid id format: {id}")
             return jsonify({'error': 'Invalid id format: must be 10 characters, start with uppercase letter, second character 1 or 2, followed by 8 digits'}), 400
 
-        # 驗證年齡
-        if not validate_age(age):
-            logger.warning(f"Invalid age: {age}")
-            return jsonify({'error': 'Invalid age: must be a number between 0 and 150'}), 400
-
-        # 驗證身份
         if not validate_identity(identity):
             logger.warning(f"Invalid identity: {identity}")
             return jsonify({'error': f"Invalid identity: must be one of {', '.join(VALID_IDENTITIES)}"}), 400
 
-        # 檢查身分證號碼或使用者名稱是否已存在
         if User.query.filter_by(id=id).first():
             logger.warning(f"ID number already exists: {id}")
             return jsonify({'error': 'ID number already exists'}), 400
@@ -146,13 +167,12 @@ def register():
             logger.warning(f"Username already exists: {username}")
             return jsonify({'error': 'Username already exists'}), 400
 
-        # 儲存使用者資料（包括身份）
-        new_user = User(id=id, age=int(age), username=username, password=password, identity=identity)
+        new_user = User(id=id, username=username, password=password, identity=identity)
         db.session.add(new_user)
         db.session.commit()
 
-        logger.info(f"User registered successfully: id={id}, username={username}, age={age}, identity={identity}")
-        return jsonify({'message': 'User registered successfully', 'id': id, 'identity': identity}), 201
+        logger.info(f"User registered successfully: id={id}, username={username}, identity={identity}")
+        return jsonify({'message': 'User registered successfully', 'id': id, 'username': username, 'identity': identity}), 201
         
     except Exception as e:
         logger.error(f"Register failed: {str(e)}")
@@ -166,7 +186,6 @@ def login():
         data = request.get_json()
         logger.debug(f"Received login request: {json.dumps({k: v for k, v in data.items() if k != 'password'})}")
 
-        # 檢查必要欄位
         if not data or 'id' not in data or 'password' not in data:
             logger.warning("Missing id or password")
             return jsonify({'error': 'Missing id or password'}), 400
@@ -174,20 +193,18 @@ def login():
         id = data['id']
         password = data['password']
 
-        # 驗證身分證號碼
         if not validate_id(id):
             logger.warning(f"Invalid id format: {id}")
             return jsonify({'error': 'Invalid id format: must be 10 characters, start with uppercase letter, second character 1 or 2, followed by 8 digits'}), 400
 
         user = User.query.filter_by(id=id).first()
         if user and user.password == password:
-            logger.info(f"Login successful: id={id}, username={user.username}, age={user.age}, identity={user.identity}")
+            logger.info(f"Login successful: id={id}, username={user.username}, identity={user.identity}")
             return jsonify({
                 'message': 'Login successful',
                 'token': 'dummy-token',
                 'id': id,
                 'username': user.username,
-                'age': user.age,
                 'identity': user.identity
             }), 200
         
@@ -203,7 +220,7 @@ def health():
     logger.debug("Health check requested")
     return jsonify({'status': 'healthy'}), 200
 
-# 新增查看所有使用者資料的 API
+# 查看所有使用者資料的 API
 @app.route('/api/users', methods=['GET'])
 def get_users():
     try:
@@ -211,7 +228,6 @@ def get_users():
         users = User.query.all()
         user_list = [{
             'id': user.id,
-            'age': user.age,
             'username': user.username,
             'password': user.password,
             'identity': user.identity
@@ -222,18 +238,74 @@ def get_users():
         logger.error(f"Failed to fetch users: {str(e)}")
         return jsonify({'error': 'Internal server error'}), 500
 
+# 新增查詢歷史 API
+@app.route('/api/search-history', methods=['POST'])
+def add_search_history():
+    try:
+        user, error_response = authenticate_request()
+        if error_response:
+            return error_response
+
+        data = request.get_json()
+        if not data or 'query_text' not in data:
+            logger.warning("Missing query_text")
+            return jsonify({'error': 'Missing query_text'}), 400
+
+        query_text = data['query_text']
+        user_id = user.id  # 使用已認證的使用者 ID
+
+        # 驗證查詢內容
+        if not validate_query_text(query_text):
+            logger.warning(f"Invalid query_text: {query_text}")
+            return jsonify({'error': 'Invalid query_text: must be non-empty and less than 255 characters'}), 400
+
+        # 儲存查詢歷史，設置 query_time 為當前時間
+        query_time = datetime.utcnow().replace(second=0, microsecond=0)  # 去掉秒數和毫秒
+        new_history = SearchHistory(user_id=user_id, query_text=query_text, query_time=query_time)
+        db.session.add(new_history)
+        db.session.commit()
+
+        logger.info(f"Search history added for user_id={user_id}, query_text={query_text}")
+        return jsonify({'message': 'Search history added successfully', 'id': new_history.id}), 201
+
+    except Exception as e:
+        logger.error(f"Add search history failed: {str(e)}")
+        db.session.rollback()
+        return jsonify({'error': 'Internal server error'}), 500
+
+# 獲取查詢歷史 API
+@app.route('/api/search-history', methods=['GET'])
+def get_search_history():
+    try:
+        user, error_response = authenticate_request()
+        if error_response:
+            return error_response
+
+        logger.debug(f"Fetching search history for user_id={user.id}")
+        history = SearchHistory.query.filter_by(user_id=user.id).order_by(SearchHistory.id.desc()).all()
+        history_list = [{
+            'id': record.id,
+            'query_text': record.query_text,
+            'query_time': record.query_time.isoformat()[:16]  # 截取到分鐘，格式如 2025-05-05 17:22
+        } for record in history]
+
+        logger.info(f"Retrieved {len(history_list)} search history records for user_id={user.id}")
+        return jsonify(history_list), 200
+
+    except Exception as e:
+        logger.error(f"Get search history failed: {str(e)}")
+        return jsonify({'error': 'Internal server error'}), 500
+
 # 主程式進入點
 if __name__ == '__main__':
-    with app.app_context():  # 在應用程式上下文中執行初始化
+    with app.app_context():
         try:
-            db.create_all()  # 建立所有資料表（若尚未建立）
+            db.create_all()
             logger.info("Database initialized")
         except Exception as e:
             logger.error(f"Database init error: {str(e)}")
 
-    # 從環境變數讀取埠號，預設為 8080
     port = int(os.getenv('PORT', 8080))
 
-    # 使用 Waitress 作為 WSGI server 來部署 Flask 應用（適用於正式環境）
     from waitress import serve
     serve(app, host='0.0.0.0', port=port, threads=4)

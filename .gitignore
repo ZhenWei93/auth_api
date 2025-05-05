@@ -1,7 +1,7 @@
 __pycache__/
 *.pyc
 .venv/
-auth.db
+*auth.db
 *.log
 *.json
 .env

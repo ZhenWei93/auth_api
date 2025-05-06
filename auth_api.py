@@ -122,13 +122,19 @@ def authenticate_request():
         logger.warning(f"Invalid token: {token}")
         return None, jsonify({'error': 'Invalid token'}), 401
     
-    # 從請求體中獲取 user_id（假設前端會提供）
-    data = request.get_json(silent=True)
-    user_id = data.get('user_id') if data else None
+    # 從查詢參數或請求體獲取 user_id
+    user_id = request.args.get('user_id')  # 優先從查詢參數獲取
+    if not user_id:
+        data = request.get_json(silent=True)
+        user_id = data.get('user_id') if data else None
     if not user_id:
         logger.warning("Missing user_id in request")
         return None, jsonify({'error': 'Missing user_id'}), 400
     
+    if not validate_id(user_id):
+        logger.warning(f"Invalid user_id format: {user_id}")
+        return None, jsonify({'error': 'Invalid user_id format'}), 400
+
     user = User.query.filter_by(id=user_id).first()
     if not user:
         logger.warning(f"User not found for user_id: {user_id}")
@@ -281,21 +287,26 @@ def get_search_history():
         if error_response:
             return error_response
 
-        logger.debug(f"Fetching search history for user_id={user.id}")
-        history = SearchHistory.query.filter_by(user_id=user.id).order_by(SearchHistory.id.desc()).all()
+        user_id = request.args.get('user_id')  # 從查詢參數獲取 user_id
+        if not user_id or not validate_id(user_id):
+            logger.warning(f"Invalid or missing user_id: {user_id}")
+            return jsonify({'error': 'Invalid or missing user_id'}), 400
+
+        logger.debug(f"Fetching search history for user_id={user_id}")
+        history = SearchHistory.query.filter_by(user_id=user_id).order_by(SearchHistory.id.desc()).all()
         history_list = [{
             'id': record.id,
             'query_text': record.query_text,
             'query_time': record.query_time.isoformat()[:16]  # 截取到分鐘，格式如 2025-05-05 17:22
         } for record in history]
 
-        logger.info(f"Retrieved {len(history_list)} search history records for user_id={user.id}")
+        logger.info(f"Retrieved {len(history_list)} search history records for user_id={user_id}")
         return jsonify(history_list), 200
 
     except Exception as e:
         logger.error(f"Get search history failed: {str(e)}")
-        return jsonify({'error': 'Internal server error'}), 500
-
+        return jsonify({'error': f'Internal server error: {str(e)}'}), 500
+    
 # 主程式進入點
 if __name__ == '__main__':
     with app.app_context():
